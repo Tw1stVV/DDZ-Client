@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.16)
+project(strategy)
+aux_source_directory(./ SRC)
+file(GLOB Headers ${PROJECT_SOURCE_DIR}/*.h)
+add_library(strategy ${SRC} ${Headers})
+target_link_libraries(strategy PRIVATE Qt${QT_VERSION_MAJOR}::Core)
