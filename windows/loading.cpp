@@ -1,7 +1,7 @@
 #include "loading.h"
 
 #include "gamepanel.h"
-
+#include <QDebug>
 #include <QPaintEvent>
 #include <QPainter>
 #include <QTimer>
