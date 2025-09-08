@@ -28,6 +28,9 @@ include_directories(
   ${PROJECT_SOURCE_DIR}/control
   ${PROJECT_SOURCE_DIR}/thread
   ${PROJECT_SOURCE_DIR}/strategy
+  ${PROJECT_SOURCE_DIR}/tcp
+  ${PROJECT_SOURCE_DIR}/serialize
+  ${PROJECT_SOURCE_DIR}/crypto
 )
 
 #添加子目录
@@ -37,6 +40,9 @@ add_subdirectory(windows)
 add_subdirectory(control)
 add_subdirectory(thread)
 add_subdirectory(strategy)
+add_subdirectory(tcp)
+add_subdirectory(serialize)
+add_subdirectory(crypto)
 
 #添加资源文件
 qt_add_resources(PROJECT_SOURCES res.qrc)

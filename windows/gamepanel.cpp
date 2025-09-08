@@ -69,6 +69,7 @@ Gamepanel::Gamepanel(QWidget* parent) : QMainWindow(parent), ui(new Ui::Gamepane
 Gamepanel::~Gamepanel()
 {
     delete ui;
+    deleteLater();
 }
 
 void Gamepanel::gameControlInit()

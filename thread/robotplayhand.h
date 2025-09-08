@@ -1,10 +1,10 @@
 #ifndef ROBOTPLAYHAND_H
 #define ROBOTPLAYHAND_H
-
+#include <QRunnable>
 #include <QThread>
 
 class Player;
-class RobotPlayHand : public QThread
+class RobotPlayHand : public QObject, public QRunnable
 {
     Q_OBJECT
 public:

@@ -3,6 +3,7 @@
 #include "strategy.h"
 #include "robotgrablord.h"
 #include "robotplayhand.h"
+#include <QThreadPool>
 Robot::Robot(QObject* parent) : Player{parent}
 {
     this->m_type = Player::Robot;
@@ -10,32 +11,26 @@ Robot::Robot(QObject* parent) : Player{parent}
 
 void Robot::prepareCallLord()
 {
-    RobotGrabLord* subThread = new RobotGrabLord(this);
-    connect(
-        subThread,
-        &QThread::finished,
-        this,
-        [=]()
-        {
-            qDebug() << "RobotGrabLord子线程对象析构...." << ", Robot name: " << this->name();
-            subThread->deleteLater();
-        });
-    subThread->start();
+    RobotGrabLord* task = new RobotGrabLord(this);
+    // connect(
+    //     task,
+    //     &QRunnable::,
+    //     this,
+    //     [=]()
+    //     { qDebug() << "RobotGrabLord子线程对象析构...." << ", Robot name: " << this->name(); });
+    QThreadPool::globalInstance()->start(task);
 }
 
 void Robot::preparePlayHand()
 {
-    RobotPlayHand* subThread = new RobotPlayHand(this);
-    connect(
-        subThread,
-        &QThread::finished,
-        this,
-        [=]()
-        {
-            qDebug() << "RobotPlayHand子线程对象析构...." << ", Robot name: " << this->name();
-            subThread->deleteLater();
-        });
-    subThread->start();
+    RobotPlayHand* task = new RobotPlayHand(this);
+    // connect(
+    //     task,
+    //     &QRunnable::finished,
+    //     this,
+    //     [=]()
+    //     { qDebug() << "RobotPlayHand子线程对象析构...." << ", Robot name: " << this->name(); });
+    QThreadPool::globalInstance()->start(task);
 }
 
 void Robot::thinkingCallLord()

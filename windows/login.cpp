@@ -1,5 +1,7 @@
 #include "login.h"
+#include "datamanager.h"
 #include "ui_login.h"
+#include "gamepanel.h"
 
 #include <QLineEdit>
 #include <QRegularExpression>
@@ -104,6 +106,9 @@ void Login::onLogin()
     flagPwd = verifyData(ui->login_password_ed);
     if (flagName && flagPwd)
     {
+        // 显示游戏窗口
+        Gamepanel* pannel = new Gamepanel();
+        pannel->show();
     }
 }
 
@@ -115,6 +120,7 @@ void Login::onRegister()
     flagPhone = verifyData(ui->register_phone_ed);
     if (flagName && flagPwd && flagPhone)
     {
+        ui->stackedWidget->setCurrentWidget(ui->login_page);
     }
 }
 
@@ -125,5 +131,8 @@ void Login::onNetOK()
     flagPort = verifyData(ui->net_port_ed);
     if (flagIpaddr && flagPort)
     {
+        DataManager* instance = DataManager::getInstance();
+        instance->setIpaddr(ui->net_ipaddress_ed->text().toUtf8());
+        instance->setPort(ui->net_port_ed->text().toUtf8());
     }
 }

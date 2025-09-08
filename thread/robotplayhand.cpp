@@ -1,11 +1,14 @@
 #include "robotplayhand.h"
 #include "robot.h"
-RobotPlayHand::RobotPlayHand(Player* player, QObject* parent) : QThread(parent), m_player(player)
+
+RobotPlayHand::RobotPlayHand(Player* player, QObject* parent) :
+    QObject(parent), QRunnable(), m_player(player)
 {
+    setAutoDelete(true);
 }
 
 void RobotPlayHand::run()
 {
-    msleep(1500);
+    QThread::msleep(1500);
     m_player->thinkingPlayHand();
 }
