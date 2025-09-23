@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+enum RequestCode
+{
+    UserLogin = 0;
+    Register = 1;
+    AesDistribute = 2;
+};
+
+enum ResponseCode
+{
+    LoginOK = 0;
+    RegisterOK = 1;
+    RsaDistribute = 2;
+    AesVerifyOK = 3;
+    Failed = 4;
+};
+
+message Informaion
+{
+    string userName = 1;
+    string data1 = 2;
+    string data2 = 3;
+    string data3 = 4;
+    RequestCode reqCode = 5;
+    ResponseCode resCode = 6;
+}

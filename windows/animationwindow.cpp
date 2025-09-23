@@ -1,10 +1,11 @@
 #include "animationwindow.h"
 
+#include <QPaintEvent>
 #include <QPainter>
 #include <QTimer>
-#include <QPaintEvent>
 
-AnimationWindow::AnimationWindow(QWidget* parent) : QWidget{parent}
+AnimationWindow::AnimationWindow(QWidget* parent)
+    : QWidget{parent}
 {
     m_x = 0;
 }
@@ -46,24 +47,19 @@ void AnimationWindow::showJokersBomb()
     m_x = 0;
     m_index = 0;
     QTimer* timer = new QTimer(this);
-    connect(
-        timer,
-        &QTimer::timeout,
-        this,
-        [=]()
+    connect(timer, &QTimer::timeout, this, [=]() {
+        m_index++;
+        if (m_index > 8)
         {
-            m_index++;
-            if (m_index > 8)
-            {
-                timer->stop();
-                timer->deleteLater();
-                m_index = 8;
-                this->hide();
-            }
-            QString name = QString(":/images/joker_bomb_%1.png").arg(m_index);
-            m_image.load(name);
-            this->update();
-        });
+            timer->stop();
+            timer->deleteLater();
+            m_index = 8;
+            this->hide();
+        }
+        QString name = QString(":/images/joker_bomb_%1.png").arg(m_index);
+        m_image.load(name);
+        this->update();
+    });
     timer->start(60);
 }
 
@@ -72,24 +68,19 @@ void AnimationWindow::showBomb()
     m_x = 0;
     m_index = 0;
     QTimer* timer = new QTimer(this);
-    connect(
-        timer,
-        &QTimer::timeout,
-        this,
-        [=]()
+    connect(timer, &QTimer::timeout, this, [=]() {
+        m_index++;
+        if (m_index > 12)
         {
-            m_index++;
-            if (m_index > 12)
-            {
-                timer->stop();
-                timer->deleteLater();
-                m_index = 12;
-                this->hide();
-            }
-            QString name = QString(":/images/bomb_%1.png").arg(m_index);
-            m_image.load(name);
-            this->update();
-        });
+            timer->stop();
+            timer->deleteLater();
+            m_index = 12;
+            this->hide();
+        }
+        QString name = QString(":/images/bomb_%1.png").arg(m_index);
+        m_image.load(name);
+        this->update();
+    });
     timer->start(60);
 }
 
@@ -102,32 +93,27 @@ void AnimationWindow::showPlane()
 
     int step = this->width() / 5;
     QTimer* timer = new QTimer(this);
-    connect(
-        timer,
-        &QTimer::timeout,
-        this,
-        [=]()
+    connect(timer, &QTimer::timeout, this, [=]() {
+        static int dist = 0;
+        static int times = 0;
+        dist += 5;
+        if (dist > step)
         {
-            static int dist = 0;
-            static int times = 0;
-            dist += 5;
-            if (dist > step)
-            {
-                dist = 0;
-                times++;
-                QString name = QString(":/images/plane_%1.png").arg(times);
-                m_image.load(name);
-            }
-            if (m_x <= -210)
-            {
-                timer->stop();
-                timer->deleteLater();
-                dist = times = 0;
-                this->hide();
-            }
-            m_x -= 5;
-            this->update();
-        });
+            dist = 0;
+            times++;
+            QString name = QString(":/images/plane_%1.png").arg(times);
+            m_image.load(name);
+        }
+        if (m_x <= -210)
+        {
+            timer->stop();
+            timer->deleteLater();
+            dist = times = 0;
+            this->hide();
+        }
+        m_x -= 5;
+        this->update();
+    });
     timer->start(15);
 }
 

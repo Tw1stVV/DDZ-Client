@@ -1,12 +1,12 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
+#include "codec.h"
 #include <QDialog>
 
 class QLineEdit;
-namespace Ui
-{
-    class Login;
+namespace Ui {
+class Login;
 }
 
 class Login : public QDialog
@@ -16,6 +16,7 @@ class Login : public QDialog
 public:
     explicit Login(QWidget* parent = nullptr);
     bool verifyData(QLineEdit* edit);
+    void startConnect(Message* msg);
     ~Login();
 
 private slots:
@@ -25,6 +26,7 @@ private slots:
 
 private:
     Ui::Login* ui;
+    bool m_isConnected = false;
 };
 
 #endif // LOGIN_H

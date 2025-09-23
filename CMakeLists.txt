@@ -31,7 +31,12 @@ include_directories(
   ${PROJECT_SOURCE_DIR}/tcp
   ${PROJECT_SOURCE_DIR}/serialize
   ${PROJECT_SOURCE_DIR}/crypto
+  ("E:\\OpenSSL-Win64\\include")
+  ("C:\\protobuf\\include")
 )
+
+
+link_directories("C:\\protobuf\\lib")
 
 #添加子目录
 add_subdirectory(card)
@@ -70,7 +75,8 @@ else()
     endif()
 endif()
 
-target_link_libraries(ddz-client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets windows control player thread strategy card)
+target_link_libraries(ddz-client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets windows
+  control player card strategy thread crypto serialize tcp)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

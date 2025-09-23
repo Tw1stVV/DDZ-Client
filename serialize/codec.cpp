@@ -18,7 +18,7 @@ QByteArray Codec::encodeMsg()
     return QByteArray::fromStdString(out);
 }
 
-QSharedPointer<Message> Codec::uncodeMsg()
+QSharedPointer<Message> Codec::decodeMsg()
 {
     std::string data = m_msg.toStdString();
     m_obj.ParseFromString(data);
@@ -29,13 +29,7 @@ QSharedPointer<Message> Codec::uncodeMsg()
     msg->data3 = QByteArray::fromStdString(m_obj.data3());
     msg->reqCode = m_obj.reqcode();
     msg->resCode = m_obj.rescode();
-    QSharedPointer<Message> ptr(
-        msg,
-        [this](Message* p)
-        {
-            delete p;
-            qDebug() << "Message被释放";
-        });
+    QSharedPointer<Message> ptr(msg, [this](Message* p) { delete p; });
     return ptr;
 }
 

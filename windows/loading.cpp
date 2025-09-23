@@ -6,7 +6,8 @@
 #include <QPainter>
 #include <QTimer>
 
-Loading::Loading(QWidget* parent) : QWidget{parent}
+Loading::Loading(QWidget* parent)
+    : QWidget{parent}
 {
     bk.load(":/images/loading.png");
     this->setFixedSize(bk.size());
@@ -19,24 +20,20 @@ Loading::Loading(QWidget* parent) : QWidget{parent}
 
     QPixmap pix(":/images/progress.png");
     QTimer* timer = new QTimer(this);
-    connect(
-        timer,
-        &QTimer::timeout,
-        this,
-        [=]()
+
+    connect(timer, &QTimer::timeout, this, [=]() {
+        progress = pix.copy(0, 0, dist, pix.height());
+        this->update();
+        if (dist >= pix.width())
         {
-            progress = pix.copy(0, 0, dist, pix.height());
-            this->update();
-            if (dist >= pix.width())
-            {
-                timer->stop();
-                timer->deleteLater();
-                Gamepanel* panel = new Gamepanel;
-                panel->show();
-                this->close();
-            }
-            dist += 5;
-        });
+            timer->stop();
+            timer->deleteLater();
+            Gamepanel* panel = new Gamepanel;
+            panel->show();
+            this->close();
+        }
+        dist += 5;
+    });
     timer->start(15);
 }
 

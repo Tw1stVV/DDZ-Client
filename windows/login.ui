@@ -23,7 +23,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="login_page">
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -200,16 +200,38 @@
           <item>
            <widget class="QWidget" name="widget_8" native="true">
             <layout class="QGridLayout" name="gridLayout_3">
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="register_username_ed"/>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="register_password_ed"/>
-             </item>
              <item row="1" column="0">
               <widget class="QLabel" name="register_password_lab">
                <property name="text">
                 <string>密码：</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="register_phone_lab">
+               <property name="text">
+                <string>手机：</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="register_username_ed">
+               <property name="text">
+                <string>test</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="register_username_lab">
+               <property name="text">
+                <string>用户名：</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="register_password_ed">
+               <property name="text">
+                <string>95184726Ww</string>
                </property>
               </widget>
              </item>
@@ -252,22 +274,12 @@
                </layout>
               </widget>
              </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="register_username_lab">
-               <property name="text">
-                <string>用户名：</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="register_phone_lab">
-               <property name="text">
-                <string>手机：</string>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="1">
-              <widget class="QLineEdit" name="register_phone_ed"/>
+              <widget class="QLineEdit" name="register_phone_ed">
+               <property name="text">
+                <string>15388887777</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

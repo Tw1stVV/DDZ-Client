@@ -1,8 +1,9 @@
 #ifndef CODEC_H
 #define CODEC_H
-#include <QByteArray>
 #include "information.pb.h"
+#include <QByteArray>
 #include <QSharedPointer>
+
 struct Message
 {
     QByteArray userName;
@@ -26,7 +27,7 @@ public:
     QByteArray encodeMsg();
 
     // 数据解码
-    QSharedPointer<Message> uncodeMsg();
+    QSharedPointer<Message> decodeMsg();
 
     // 重新加载数据
     void reLoad(Message* msg);

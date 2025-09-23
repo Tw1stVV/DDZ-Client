@@ -5,7 +5,8 @@
 #include <QPaintEvent>
 #include <QPainter>
 
-CardPanel::CardPanel(QWidget* parent) : QWidget{parent}
+CardPanel::CardPanel(QWidget* parent)
+    : QWidget{parent}
 {
     m_isfront = true;
 }
