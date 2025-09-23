@@ -24,9 +24,13 @@ private slots:
     void onRegister();
     void onNetOK();
 
+    void saveUserInfo();
+    void loadUserInfo();
+
 private:
     Ui::Login* ui;
     bool m_isConnected = false;
+    const QByteArray KEY = "王师北定中原日，家祭勿忘告乃翁";
 };
 
 #endif // LOGIN_H

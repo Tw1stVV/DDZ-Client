@@ -1,10 +1,14 @@
 #include "login.h"
+#include "aescrypto.h"
 #include "communication.h"
 #include "datamanager.h"
 #include "gamepanel.h"
 #include "ui_login.h"
 
+#include <qjsondocument.h>
+#include <qjsonobject.h>
 #include <QCryptographicHash>
+#include <QFile>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QRegularExpression>
@@ -85,8 +89,11 @@ Login::Login(QWidget *parent)
     connect(ui->net_on_btn, &QPushButton::clicked, this, &Login::onNetOK);
 
     // test
-    ui->login_username_ed->setText("hello");
-    ui->login_password_ed->setText("95184726Ww");
+    // ui->login_username_ed->setText("test");
+    // ui->login_password_ed->setText("95184726Ww");
+
+    //加载密码
+    loadUserInfo();
 }
 
 bool Login::verifyData(QLineEdit *edit)
@@ -127,7 +134,8 @@ void Login::startConnect(Message *msg)
             //保存用户名
             DataManager::getInstance()->setUsername(ui->login_username_ed->text().toUtf8());
             QMessageBox::information(this, "登录", "登录成功");
-            //加载用户名和密码
+            //保存用户名和密码
+            saveUserInfo();
         });
 
         // 注册成功切换到登录界面
@@ -207,5 +215,52 @@ void Login::onNetOK()
         DataManager *instance = DataManager::getInstance();
         instance->setIpaddr(ui->net_ipaddress_ed->text().toUtf8());
         instance->setPort(ui->net_port_ed->text().toUtf8());
+    }
+}
+
+void Login::saveUserInfo()
+{
+    if (ui->login_save_pwd->isChecked())
+    {
+        //json保存用户名和密码
+        QJsonObject obj;
+        obj.insert("username", ui->login_username_ed->text());
+        obj.insert("passwd", ui->login_password_ed->text());
+        QJsonDocument doc(obj);
+        QByteArray json = doc.toJson();
+        //aes加密
+        AesCrypto aes(AesCrypto::AES_CBC_128, KEY.left(16));
+        json = aes.enCrypto(json);
+        //写入文件
+        QFile file("userinfo.bin");
+        file.open(QIODevice::WriteOnly);
+        file.write(json);
+        file.close();
+    }
+    else
+    {
+        QFile file("userinfo.bin");
+        file.remove();
+    }
+}
+
+void Login::loadUserInfo()
+{
+    QFile file("userinfo.bin");
+    bool isSave = file.open(QIODevice::ReadOnly);
+    if (isSave)
+    {
+        ui->login_save_pwd->setChecked(true);
+        QByteArray data = file.readAll();
+        AesCrypto aes(AesCrypto::AES_CBC_128, KEY.left(16));
+        data = aes.deCrypto(data);
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject json = doc.object();
+        ui->login_username_ed->setText(json.value("username").toString());
+        ui->login_password_ed->setText(json.value("passwd").toString());
+    }
+    else
+    {
+        ui->login_save_pwd->setChecked(false);
     }
 }
