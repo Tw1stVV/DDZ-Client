@@ -28,23 +28,11 @@ void Communication::sendMessage(Message* msg, bool aescrpto)
     Codec c(msg);
     QByteArray data = c.encodeMsg();
 
-    qDebug("----加密前begin------");
-    qDebug() << data.toHex();
-    qDebug("----加密前end------");
-
     // 加密数据
     if (aescrpto && m_aes != nullptr)
     {
         data = m_aes->enCrypto(data);
     }
-
-    qDebug("----aes key begin------");
-    qDebug() << m_aesKey.toHex();
-    qDebug("----aes key end------");
-
-    qDebug("----加密后begin------");
-    qDebug() << data.toHex();
-    qDebug("----加密后end------");
     m_socket->sendMsg(data);
 }
 

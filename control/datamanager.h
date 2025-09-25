@@ -29,6 +29,7 @@ private:
 
     QByteArray m_username;
     QByteArray m_ipaddr = "192.168.2.129";
+    // QByteArray m_ipaddr = "192.168.130.164";
     QByteArray m_port = "10000";
     Communication* m_communication = nullptr;
 };

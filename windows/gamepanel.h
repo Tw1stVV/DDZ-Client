@@ -3,13 +3,13 @@
 
 #define TEST
 
+#include "animationwindow.h"
 #include "card.h"
 #include "cards.h"
 #include "countdown.h"
-#include <QMainWindow>
 #include "gamecontrol.h"
-#include "animationwindow.h"
 #include "player.h"
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
 class CardPanel;
@@ -17,9 +17,8 @@ class CardPanel;
 class QLabel;
 class QTimer;
 class BGMControl;
-namespace Ui
-{
-    class Gamepanel;
+namespace Ui {
+class Gamepanel;
 }
 QT_END_NAMESPACE
 
@@ -110,12 +109,12 @@ private slots:
     // 更新赌注
     void updateBeat(int beat);
 
+public:
+signals:
+    void ClosePanel();
+
 private:
-    enum CardAlign
-    {
-        Horizontal,
-        Vertical
-    };
+    enum CardAlign { Horizontal, Vertical };
     struct PlayContext
     {
         // 1. 玩家扑克牌显示的区域
@@ -170,5 +169,9 @@ protected:
     // QWidget interface
 protected:
     virtual void mouseMoveEvent(QMouseEvent* event) override;
+
+    // QWidget interface
+protected:
+    virtual void closeEvent(QCloseEvent *event) override;
 };
 #endif // GAMEPANEL_H

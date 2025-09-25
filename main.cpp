@@ -1,10 +1,10 @@
-#include "login.h"
+#include "aescrypto.h"
 #include "cards.h"
+#include "login.h"
+#include "rsacrypto.h"
 #include <QApplication>
 #include <QResource>
 #include <QThreadPool>
-#include "aescrypto.h"
-#include "rsacrypto.h"
 
 void text()
 {
@@ -42,7 +42,10 @@ int main(int argc, char* argv[])
     qRegisterMetaType<Cards>("Cards&");
     QResource::registerResource("./resource.rcc");
     Login w;
-    w.show();
-    text();
-    return a.exec();
+    int ret = w.exec();
+    if (ret == QDialog::Accepted)
+    {
+        return a.exec();
+    }
+    return 0;
 }

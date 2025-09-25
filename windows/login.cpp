@@ -2,6 +2,7 @@
 #include "aescrypto.h"
 #include "communication.h"
 #include "datamanager.h"
+#include "gamemode.h"
 #include "gamepanel.h"
 #include "ui_login.h"
 
@@ -136,6 +137,11 @@ void Login::startConnect(Message *msg)
             QMessageBox::information(this, "登录", "登录成功");
             //保存用户名和密码
             saveUserInfo();
+
+            // 选择游戏模式-单机或联机
+            GameMode *gameMode = new GameMode;
+            gameMode->show();
+            this->accept();
         });
 
         // 注册成功切换到登录界面
